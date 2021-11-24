@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, FormControlLabel, Grid, makeStyles, Paper, Radio, RadioGroup, TextField } from '@material-ui/core'
+import { Button, Card, CardActionArea, CardContent, FormControlLabel, Grid, makeStyles, Paper, Radio, RadioGroup, TextField } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import { AppBar, Toolbar } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -74,6 +74,9 @@ export const CreateForm = () => {
         // await axios.post('http://localhost:8000/survey_skeletons', newSurvey)
         dispatch(createSurvey(newSurvey, navigate))
     }
+    const cancelForm = () => {
+        navigate.push('/')
+    }
 
     return (
         <div className={classes.root}>
@@ -85,11 +88,12 @@ export const CreateForm = () => {
                     <Typography variant='h4' style={{ color: '#fafafa', flexGrow: 1 }}>
                         {formName}
                     </Typography>
-                    <Button onClick={saveForm} variant='text' style={{ color: "#fafafa", marginRight: "20px" }}>
+
+                    {questions.length > 0 ? <Button onClick={saveForm} variant='contained' color='secondary' style={{ color: "#111", marginRight: "20px" }}>
                         Save
-                    </Button>
-                    <Button variant='text' style={{ color: "#fafafa" }}>
-                        Logout
+                    </Button> : <></>}
+                    <Button onClick={cancelForm} variant='contained' color='secondary' style={{ color: "#111" }}>
+                        Cancel
                     </Button>
                 </Toolbar>
             </AppBar>
@@ -111,14 +115,64 @@ export const CreateForm = () => {
                         >
                             <Grid>
                                 <Grid item lg={12}>
-                                    <TextField onChange={(e) => setFormName(e.target.value)} variant="outlined" label="Form Name" fullWidth style={{ marginBottom: "6px" }} />
-                                    <TextField value={formDescription} onChange={(e) => setFormDescription(e.target.value)} variant="outlined" label="Form Description" fullWidth />
+                                    <TextField onChange={(e) => setFormName(e.target.value)} variant="outlined" label="Enter Form Name" fullWidth style={{ marginBottom: "6px" }} />
+                                    <TextField value={formDescription} onChange={(e) => setFormDescription(e.target.value)} variant="outlined" label="Enter Form Description" fullWidth />
                                 </Grid>
 
 
                             </Grid>
                         </Paper>
                     </Grid>
+
+                    {/* Form display */}
+
+                    <Grid
+                        container
+                        style={{ marginTop: "10px" }}
+                        spacing={3}
+                        direction='column'
+                        alignItems='center'
+                        justifyContent='center'
+                    >
+                        {
+                            questions.map((ques, index) => (
+                                <Grid item lg={12} key={index}>
+                                    <Card style={{ width: "1000px", background: "#e8f5e9" }}>
+                                        <CardActionArea>
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                    {index+1}. {ques.name}
+                                                </Typography>
+                                                {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
+                                                {ques.type === "mulchoices" ? <FormControl component="fieldset">
+                                                    <RadioGroup>
+                                                        <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
+                                                        <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
+                                                        <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
+                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} />
+                                                    </RadioGroup>
+                                                </FormControl> : <div></div>
+                                                }
+                                                {ques.type === "date" ? <TextField
+                                                    type="date"
+                                                    fullWidth
+                                                    className={classes.textField}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }} /> : <div></div>
+                                                }
+                                            </CardContent>
+                                        </CardActionArea>
+                                    </Card>
+                                </Grid>))
+                        }
+
+                    </Grid>
+
+
+                    {/* Form display */}
+
+
                     <Grid item lg={12}>
                         <Paper
                             color="primary"
@@ -155,51 +209,6 @@ export const CreateForm = () => {
                     </Grid>
                 </Grid>
 
-                {/* Preview */}
-                <div className={classes.page}>
-                    <Grid
-                        container
-                        spacing={3}
-                        direction='column'
-                        style={{ minHeight: '50vh', marginTop: "4px" }}
-                    >
-                        <Grid item lg={12}><Typography variant='h3'>Preview</Typography></Grid>
-                        { questions.length ? 
-                            <Paper
-                                className={classes.paper}
-                            >
-                                {
-                                    questions.slice(0).map((question, index) => {
-                                        return <Grid item lg={12} key={question.name}>
-                                            <Grid>
-                                                <Grid item lg={12}><Typography variant='h5'>{index + 1}.{question.name}</Typography></Grid>
-                                                {question.type === "text" ? <Grid item lg={12}><TextField className={classes.textField} variant="standard" style={{ width: "200px" }}></TextField></Grid> : <div></div>}
-                                                {question.type === "mulchoices" ? <FormControl component="fieldset">
-                                                    <RadioGroup>
-                                                        <FormControlLabel value={question.options[0]} control={<Radio />} label={question.options[0]} />
-                                                        <FormControlLabel value={question.options[1]} control={<Radio />} label={question.options[1]} />
-                                                        <FormControlLabel value={question.options[2]} control={<Radio />} label={question.options[2]} />
-                                                        <FormControlLabel value={question.options[3]} control={<Radio />} label={question.options[3]} />
-                                                    </RadioGroup>
-                                                </FormControl> : <div></div>
-                                                }
-                                                {question.type === "date" ? <TextField
-                                                    type="date"
-                                                    fullWidth
-                                                    defaultValue="2021-11-22"
-                                                    className={classes.textField}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }} /> : <div></div>
-                                                }
-                                            </Grid>
-                                        </Grid>
-                                    })
-                                }
-                            </Paper> : <></>
-                        }
-                    </Grid>
-                </div>
             </div>
         </div>
     )

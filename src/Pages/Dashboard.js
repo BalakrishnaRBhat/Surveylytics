@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { AppBar, Button, Container } from '@material-ui/core'
+import { AppBar, Button, Container, Grid } from '@material-ui/core'
 import { Toolbar } from '@material-ui/core'
 import { Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
@@ -26,9 +26,7 @@ export const Dashboard = () => {
     const create = () => {
         navigate.push('/create')
     }
-    const logout = () => {
-        navigate.push('/')
-    }
+ 
 
     const surveys = useSelector((state) => state.surveyReducer.surveys)
     const dispatch = useDispatch()
@@ -49,16 +47,25 @@ export const Dashboard = () => {
             <AppBar position='static' color='primary' style={{ color: "#fafafa" }}>
                 <Toolbar>
                     <Typography className={classes.appbar} variant='h4'>
-                        My Forms
+                        Survelytics
                     </Typography>
-                    <Button onClick={create} variant='text' style={{ color: "#fafafa", marginRight: "20px" }}>
+                    <Button onClick={create} variant='contained' color='secondary' style={{ color: "#111", marginRight: "20px" }}>
                         Create
-                    </Button>
-                    <Button onClick={logout} variant='text' style={{ color: "#fafafa" }}>
-                        Logout
                     </Button>
                 </Toolbar>
             </AppBar>
+            <Grid
+                style={{marginTop: "20px"}}
+                container
+                spacing={3}
+                alignItems='center'
+                justifyContent='center'
+            >
+                <Grid item >
+                    <Typography variant='h3'>My Surveys</Typography>
+                </Grid>
+
+            </Grid>
             <Container className={classes.container}>
                 <Masonry
                     breakpointCols={breakpoints}
