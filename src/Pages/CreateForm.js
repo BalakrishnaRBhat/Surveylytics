@@ -42,10 +42,12 @@ export const CreateForm = () => {
     const [formName, setFormName] = useState("Untitled Survey")
     const [formDescription, setFormDescription] = useState("")
     const [choice, setChoice] = useState(false)
-    const [choice1, setChoice1] = useState("")
-    const [choice2, setChoice2] = useState("")
-    const [choice3, setChoice3] = useState("")
-    const [choice4, setChoice4] = useState("")
+    // const [choice1, setChoice1] = useState("")
+    // const [choice2, setChoice2] = useState("")
+    // const [choice3, setChoice3] = useState("")
+    // const [choice4, setChoice4] = useState("")
+    const [options, setOptions] = useState([])
+    const [optionValue, setOptionValue] = useState([""])
     const [question_name, setQuestion_name] = useState("")
     const [question_type, setQuestion_type] = useState("")
     const [questions, setQuestions] = useState([])
@@ -53,10 +55,21 @@ export const CreateForm = () => {
     const navigate = useHistory()
     const dispatch = useDispatch()
 
+    const handleOptionAdd = () => {
+        if (optionValue.trim().length === 0) return;
+        setOptionValue("")
+        setOptions([...options, optionValue])
+
+    }
+
+    const handleOptionDelete = (op) => {
+        setOptions(options.filter(option => option !== op))
+    }
+
     const addQuestion = () => {
 
-        let choices = [choice1, choice2, choice3, choice4]
-        const updatedQuestions = [...questions, { name: question_name, ch: choice, options: choices, type: question_type, answers: [] }]
+        // let choices = [choice1, choice2, choice3, choice4]
+        const updatedQuestions = [...questions, { name: question_name, ch: choice, options: options, type: question_type, answers: [] }]
         setQuestions(updatedQuestions)
     }
 
@@ -141,33 +154,38 @@ export const CreateForm = () => {
                                         <CardHeader
                                             action={
                                                 <IconButton onClick={() => handleDelete(ques.name)}>
-                                                    <DeleteIcon/>
+                                                    <DeleteIcon />
                                                 </IconButton>
                                             }
                                         />
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="div">
-                                                 {ques.name}
-                                                </Typography>
-                                                {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
-                                                {ques.type === "mulchoices" ? <FormControl component="fieldset">
-                                                    <RadioGroup>
-                                                        <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {ques.name}
+                                            </Typography>
+                                            {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
+                                            {ques.type === "mulchoices" ? <FormControl component="fieldset">
+                                                <RadioGroup>
+                                                    {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
                                                         <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
                                                         <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} />
-                                                    </RadioGroup>
-                                                </FormControl> : <div></div>
-                                                }
-                                                {ques.type === "date" ? <TextField
-                                                    type="date"
-                                                    fullWidth
-                                                    className={classes.textField}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }} /> : <div></div>
-                                                }
-                                            </CardContent>
+                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
+                                                    {
+                                                        ques.options.map(option => (
+                                                            <FormControlLabel value={option} control={<Radio />} label={option} />
+                                                        ))
+                                                    }
+                                                </RadioGroup>
+                                            </FormControl> : <div></div>
+                                            }
+                                            {ques.type === "date" ? <TextField
+                                                type="date"
+                                                fullWidth
+                                                className={classes.textField}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }} /> : <div></div>
+                                            }
+                                        </CardContent>
                                     </Card>
                                 </Grid>))
                         }
@@ -200,14 +218,17 @@ export const CreateForm = () => {
                                             </Select>
                                         </FormControl>
                                         {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
-                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice1} label="Enter option1" onChange={(e) => setChoice1(e.target.value)}></TextField></Grid>
-                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice2} label="Enter option2" onChange={(e) => setChoice2(e.target.value)}></TextField></Grid>
-                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice3} label="Enter option3" onChange={(e) => setChoice3(e.target.value)}></TextField></Grid>
-                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice4} label="Enter option4" onChange={(e) => setChoice4(e.target.value)}></TextField></Grid>
+                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={optionValue} label="Enter option" onChange={(e) => setOptionValue(e.target.value)}></TextField></Grid>
+                                            <Grid item spacing={3}><Button style={{ marginTop: "15px" }} variant='text' color='primary' onClick={handleOptionAdd}>Add option</Button></Grid>
                                         </Grid> : <div></div>}
+                                            {
+                                                options.map(option => (
+                                                    <Grid item style={{marginLeft: "10px"}}><Button variant='text' onClick={() => handleOptionDelete(option)} endIcon={<DeleteIcon />}>{option}</Button></Grid>
+                                                ))
+                                            }
                                     </CardContent>
                                     <CardActions>
-                                        <Button startIcon={<AddCircleIcon/>} onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px", color: "#fafafa" }}>Add Question</Button>
+                                        <Button startIcon={<AddCircleIcon />} onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px", color: "#fafafa" }}>Add Question</Button>
                                     </CardActions>
                                 </Card>
                             </Grid>
@@ -228,37 +249,42 @@ export const CreateForm = () => {
                             questions.map((ques, index) => (
                                 <Grid item lg={12} key={index}>
                                     <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                            <CardContent>
-                                                <Typography gutterBottom variant="h5" component="div">
-                                                    {index + 1}. {ques.name}
-                                                </Typography>
-                                                {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
-                                                {ques.type === "mulchoices" ? <FormControl component="fieldset">
-                                                    <RadioGroup>
-                                                        <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
-                                                        <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {index + 1}. {ques.name}
+                                            </Typography>
+                                            {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
+                                            {ques.type === "mulchoices" ? <FormControl component="fieldset">
+                                                <RadioGroup>
+                                                    {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} /> */}
+                                                    {/* <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
                                                         <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} />
-                                                    </RadioGroup>
-                                                </FormControl> : <div></div>
-                                                }
-                                                {ques.type === "date" ? <TextField
-                                                    type="date"
-                                                    fullWidth
-                                                    className={classes.textField}
-                                                    InputLabelProps={{
-                                                        shrink: true,
-                                                    }} /> : <div></div>
-                                                }
-                                            </CardContent>
+                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
+                                                    {
+                                                        ques.options.map(option => (
+                                                            <FormControlLabel value={option} control={<Radio />} label={option} />
+                                                        ))
+                                                    }
+                                                </RadioGroup>
+                                            </FormControl> : <div></div>
+                                            }
+                                            {ques.type === "date" ? <TextField
+                                                type="date"
+                                                fullWidth
+                                                className={classes.textField}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }} /> : <div></div>
+                                            }
+                                        </CardContent>
                                     </Card>
                                 </Grid>))
                         }
 
                     </Grid>
-                </Grid>
+                </Grid >
 
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
