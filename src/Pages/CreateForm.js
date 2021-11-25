@@ -185,6 +185,18 @@ export const CreateForm = () => {
                                                     shrink: true,
                                                 }} /> : <div></div>
                                             }
+                                            {
+                                                ques.type === "dropdown" ? <FormControl fullWidth>
+                                                    <Select 
+                                                    >
+                                                        {
+                                                            ques.options.map(option => (
+                                                                <MenuItem fullWidth value={option}>{option}</MenuItem>
+                                                            ))
+                                                        }
+                                                    </Select>
+                                                </FormControl> : <></>
+                                            }
                                         </CardContent>
                                     </Card>
                                 </Grid>))
@@ -202,7 +214,7 @@ export const CreateForm = () => {
                                 <Card style={{ width: "1000px", background: "#e8f5e9" }}>
                                     <CardContent>
                                         <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="QuestionName" fullWidth style={{ marginBottom: "6px" }} />
-                                        <FormControl fullWidth className={classes.formControl}>
+                                        <FormControl fullWidth>
                                             <Select
                                                 style={{ width: "100%" }}
                                                 labelId="demo-simple-select-label"
@@ -215,17 +227,19 @@ export const CreateForm = () => {
                                                 <MenuItem value={"text"}>Text</MenuItem>
                                                 <MenuItem value={"mulchoices"}>Multiple Choices</MenuItem>
                                                 <MenuItem value={"date"}>Date</MenuItem>
+                                                <MenuItem value={"dropdown"}>Dropdown</MenuItem>
                                             </Select>
                                         </FormControl>
-                                        {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
+                                        {question_type === "mulchoices" || "dropdown" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
                                             <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={optionValue} label="Enter option" onChange={(e) => setOptionValue(e.target.value)}></TextField></Grid>
                                             <Grid item spacing={3}><Button style={{ marginTop: "15px" }} variant='text' color='primary' onClick={handleOptionAdd}>Add option</Button></Grid>
-                                        </Grid> : <div></div>}
-                                            {
+                                            <Grid direction='column' container spacing={2}>{
                                                 options.map(option => (
-                                                    <Grid item style={{marginLeft: "10px"}}><Button variant='text' onClick={() => handleOptionDelete(option)} endIcon={<DeleteIcon />}>{option}</Button></Grid>
+                                                    <Grid item style={{ marginLeft: "10px" }}><Button variant='text' onClick={() => handleOptionDelete(option)} endIcon={<DeleteIcon />}>{option}</Button></Grid>
                                                 ))
-                                            }
+                                            }</Grid>
+                                        </Grid> : <div></div>}
+
                                     </CardContent>
                                     <CardActions>
                                         <Button startIcon={<AddCircleIcon />} onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px", color: "#fafafa" }}>Add Question</Button>
@@ -275,6 +289,18 @@ export const CreateForm = () => {
                                                 InputLabelProps={{
                                                     shrink: true,
                                                 }} /> : <div></div>
+                                            }
+                                            {
+                                                ques.type === "dropdown" ? <FormControl fullWidth>
+                                                    <Select
+                                                    >
+                                                        {
+                                                            ques.options.map(option => (
+                                                                <MenuItem value={option}>{option}</MenuItem>
+                                                            ))
+                                                        }
+                                                    </Select>
+                                                </FormControl> : <></>
                                             }
                                         </CardContent>
                                     </Card>

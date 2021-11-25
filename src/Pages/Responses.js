@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, CardActionArea, CardContent, FormControl, FormControlLabel, Grid, Radio, RadioGroup, TextField, Typography } from '@material-ui/core'
+import { Button, Card, CardActionArea, CardContent, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { getSurvey } from '../store/actions/surveyActions'
 import axios from 'axios'
@@ -28,7 +28,7 @@ class Responses extends Component {
 
     handleChange = (e) => {
         this.setState({
-            answers: {...this.state.answers, [e.target.name]: e.target.value}
+            answers: { ...this.state.answers, [e.target.name]: e.target.value }
         })
     }
 
@@ -75,52 +75,72 @@ class Responses extends Component {
                     </Grid>
                 </Grid>
                 <Grid
-                container
-                style={{ marginTop: "10px" }}
-                spacing={3}
-                direction='column'
-                alignItems='center'
-                justifyContent='center'
-            >
-                {
-                    this.state.questions.map((ques, index) => (
-                        <Grid item lg={12} key={index}>
-                            <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                <CardActionArea>
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                         {ques.name}
-                                        </Typography>
-                                        {ques.type === "text" ? <TextField value={this.state.answers[`${ques.name}`]} name={ques.name} onChange={(e) => this.handleChange(e, index)} variant="standard" fullWidth></TextField> : <></>}
-                                        {ques.type === "mulchoices" ? <FormControl component="fieldset">
-                                            <RadioGroup value={this.state.answers[`${ques.name}`]} name={ques.name} onChange={(e) => this.handleChange(e, index)}>
-                                                <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
+                    container
+                    style={{ marginTop: "10px" }}
+                    spacing={3}
+                    direction='column'
+                    alignItems='center'
+                    justifyContent='center'
+                >
+                    {
+                        this.state.questions.map((ques, index) => (
+                            <Grid item lg={12} key={index}>
+                                <Card style={{ width: "1000px", background: "#e8f5e9" }}>
+                                    <CardActionArea>
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                {ques.name}
+                                            </Typography>
+                                            {ques.type === "text" ? <TextField value={this.state.answers[`${ques.name}`]} name={ques.name} onChange={(e) => this.handleChange(e, index)} variant="standard" fullWidth></TextField> : <></>}
+                                            {ques.type === "mulchoices" ? <FormControl component="fieldset">
+                                                <RadioGroup value={this.state.answers[`${ques.name}`]} name={ques.name} onChange={(e) => this.handleChange(e, index)}>
+                                                    {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
                                                 <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
                                                 <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} />
-                                            </RadioGroup>
-                                        </FormControl> : <div></div>
+                                                <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
+                                                    {
+                                                        ques.options.map(option => (
+                                                            <FormControlLabel value={option} control={<Radio />} label={option} />
+                                                        ))
+                                                    }
+                                                </RadioGroup>
+                                            </FormControl> : <div></div>
+                                            }
+                                            {ques.type === "date" ? <TextField
+                                                name={ques.name}
+                                                type="date"
+                                                fullWidth
+                                                value={this.state.answers[`${ques.name}`]}
+                                                onChange={(e) => this.handleChange(e, index)}
+                                                // className={classes.textField}
+                                                InputLabelProps={{
+                                                    shrink: true,
+                                                }} /> : <div></div>
+                                            }
+                                            {
+                                                ques.type === "dropdown" ? <FormControl fullWidth>
+                                                    <Select
+                                                        name={ques.name}
+                                                        value={this.state.answers[`${ques.name}`]}
+                                                        onChange={(e) => this.handleChange(e, index)}
+                                                    >
+                                                        {
+                                                            ques.options.map(option => (
+                                                                <MenuItem fullWidth value={option}>{option}</MenuItem>
+                                                            ))
+                                                        }
+                                                    </Select>
+                                                </FormControl> : <></>
                                         }
-                                        {ques.type === "date" ? <TextField
-                                            name={ques.name}
-                                            type="date"
-                                            fullWidth
-                                            value={this.state.answers[`${ques.name}`]}
-                                            onChange={(e) => this.handleChange(e, index)}
-                                            // className={classes.textField}
-                                            InputLabelProps={{
-                                                shrink: true,
-                                            }} /> : <div></div>
-                                        }
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
-                        </Grid>))
-                }
-                <Grid item lg={12}>
-                    <Button variant='contained' onClick={this.handleSubmit} style={{color: "white"}} size='large' color='primary'>Submit</Button>
+                                        </CardContent>
+                                    </CardActionArea>
+                                </Card>
+                            </Grid>))
+                    }
+                    <Grid item lg={12}>
+                        <Button variant='contained' onClick={this.handleSubmit} style={{ color: "white" }} size='large' color='primary'>Submit</Button>
+                    </Grid>
                 </Grid>
-            </Grid>
             </div>
         )
     }
