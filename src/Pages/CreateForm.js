@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, CardActionArea, CardContent, FormControlLabel, Grid, makeStyles, Paper, Radio, RadioGroup, TextField } from '@material-ui/core'
+import { Button, Card, CardActionArea, CardContent, CardActions, FormControlLabel, Grid, makeStyles, Radio, RadioGroup, TextField, CardHeader, IconButton } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
+import DeleteIcon from '@material-ui/icons/Delete';
 import { AppBar, Toolbar } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -78,6 +79,10 @@ export const CreateForm = () => {
         navigate.push('/')
     }
 
+    const handleDelete = (name) => {
+        setQuestions(questions.splice(questions.indexOf(name, 1)))
+    }
+
     return (
         <div className={classes.root}>
             <AppBar
@@ -98,30 +103,25 @@ export const CreateForm = () => {
                 </Toolbar>
             </AppBar>
 
-            <div className={classes.page}>
+            <div>
                 <Grid
                     container
                     spacing={3}
-                    direction='row'
+                    direction='column'
                     alignItems='center'
                     justifyContent='center'
-                    style={{ minHeight: '50vh', marginTop: "40px" }}
+                    style={{ marginTop: "60px" }}
                 >
                     <Grid item lg={12}>
-                        <Paper
-                            color="primary"
-                            style={{ marginBottom: "2px" }}
-                            className={classes.paper}
-                        >
-                            <Grid>
-                                <Grid item lg={12}>
+                        <Card style={{ width: "1000px", background: "#e8f5e9" }}>
+                            <CardActionArea>
+
+                                <CardContent>
                                     <TextField onChange={(e) => setFormName(e.target.value)} variant="outlined" label="Enter Form Name" fullWidth style={{ marginBottom: "6px" }} />
                                     <TextField value={formDescription} onChange={(e) => setFormDescription(e.target.value)} variant="outlined" label="Enter Form Description" fullWidth />
-                                </Grid>
-
-
-                            </Grid>
-                        </Paper>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
                     </Grid>
 
                     {/* Form display */}
@@ -138,10 +138,17 @@ export const CreateForm = () => {
                             questions.map((ques, index) => (
                                 <Grid item lg={12} key={index}>
                                     <Card style={{ width: "1000px", background: "#e8f5e9" }}>
+                                        <CardHeader
+                                            action={
+                                                <IconButton onClick={() => handleDelete(ques.name)}>
+                                                    <DeleteIcon></DeleteIcon>
+                                                </IconButton>
+                                            }
+                                        />
                                         <CardActionArea>
                                             <CardContent>
                                                 <Typography gutterBottom variant="h5" component="div">
-                                                    {index+1}. {ques.name}
+                                                    {index + 1}. {ques.name}
                                                 </Typography>
                                                 {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
                                                 {ques.type === "mulchoices" ? <FormControl component="fieldset">
@@ -174,38 +181,39 @@ export const CreateForm = () => {
 
 
                     <Grid item lg={12}>
-                        <Paper
-                            color="primary"
-                            className={classes.paper}
-                        >
-                            <Grid>
-                                <Grid item lg={12}>
-                                    <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="QuestionName" fullWidth style={{ marginBottom: "6px" }} />
-                                    <FormControl fullWidth className={classes.formControl}>
-                                        <Select
-                                            style={{ width: "100%" }}
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            value={question_type}
-                                            variant='outlined'
-                                            fullWidth
-                                            onChange={(e) => { if (e.target.value === "mulchoices") { setChoice(true) } else { setChoice("false") } return setQuestion_type(e.target.value) }}
-                                        >
-                                            <MenuItem value={"text"}>Text</MenuItem>
-                                            <MenuItem value={"mulchoices"}>Multiple Choices</MenuItem>
-                                            <MenuItem value={"date"}>Date</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
-                                        <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice1} label="Enter option1" onChange={(e) => setChoice1(e.target.value)}></TextField></Grid>
-                                        <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice2} label="Enter option2" onChange={(e) => setChoice2(e.target.value)}></TextField></Grid>
-                                        <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice3} label="Enter option3" onChange={(e) => setChoice3(e.target.value)}></TextField></Grid>
-                                        <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice4} label="Enter option4" onChange={(e) => setChoice4(e.target.value)}></TextField></Grid>
-                                    </Grid> : <div></div>}
-                                </Grid>
-                                <Button onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px" }}>Add Question</Button>
+                        <Grid>
+                            <Grid item lg={12}>
+                                <Card style={{ width: "1000px", background: "#e8f5e9" }}>
+                                        <CardContent>
+                                            <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="QuestionName" fullWidth style={{ marginBottom: "6px" }} />
+                                            <FormControl fullWidth className={classes.formControl}>
+                                                <Select
+                                                    style={{ width: "100%" }}
+                                                    labelId="demo-simple-select-label"
+                                                    id="demo-simple-select"
+                                                    value={question_type}
+                                                    variant='outlined'
+                                                    fullWidth
+                                                    onChange={(e) => { if (e.target.value === "mulchoices") { setChoice(true) } else { setChoice("false") } return setQuestion_type(e.target.value) }}
+                                                >
+                                                    <MenuItem value={"text"}>Text</MenuItem>
+                                                    <MenuItem value={"mulchoices"}>Multiple Choices</MenuItem>
+                                                    <MenuItem value={"date"}>Date</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
+                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice1} label="Enter option1" onChange={(e) => setChoice1(e.target.value)}></TextField></Grid>
+                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice2} label="Enter option2" onChange={(e) => setChoice2(e.target.value)}></TextField></Grid>
+                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice3} label="Enter option3" onChange={(e) => setChoice3(e.target.value)}></TextField></Grid>
+                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice4} label="Enter option4" onChange={(e) => setChoice4(e.target.value)}></TextField></Grid>
+                                            </Grid> : <div></div>}
+                                        </CardContent>
+                                        <CardActions>
+                                            <Button onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px" }}>Add Question</Button>
+                                        </CardActions>
+                                </Card>
                             </Grid>
-                        </Paper>
+                        </Grid>
                     </Grid>
                 </Grid>
 

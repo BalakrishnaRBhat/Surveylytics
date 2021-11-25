@@ -5,9 +5,12 @@ import { Link } from 'react-router-dom';
 
 export const SurveyCard = ({ survey }) => {
 
+
     const share = (id) => {
         alert(`Survey link: http://localhost:3000/response/${id}`)
     }
+
+    
 
     return (
         <div>

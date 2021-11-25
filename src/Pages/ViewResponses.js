@@ -1,8 +1,11 @@
-import { Card, CardActionArea, CardContent, Grid, List, ListItem, Typography } from '@material-ui/core'
+import { AppBar, Button, Card, CardActionArea, CardContent, Grid, IconButton, List, ListItem, Toolbar, Typography } from '@material-ui/core'
+import { grey } from '@material-ui/core/colors';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getSurvey } from '../store/actions/surveyActions'
+import * as xlsx from 'xlsx'
 
 class ViewResponses extends Component {
 
@@ -14,7 +17,8 @@ class ViewResponses extends Component {
             survey_name: "",
             survey_description: "",
             questions: [],
-            responses: []
+            responses: [],
+            excel_data: []
         }
     }
 
@@ -41,44 +45,56 @@ class ViewResponses extends Component {
     async componentDidMount() {
         const { id } = this.props.match.params
         this.props.getSurvey(id)
-        let answers
+        let answers = []
         let responses = []
         let dataArray = []
-        // let r = []
         let whole_data = []
         const res = await axios.get('http://localhost:8000/responses')
         whole_data = await res.data
         answers = whole_data.filter(res => res.survey_id === id)
-        // answers = answers[0]
-        // const responses = answers.response
-        // var dataArray = [];
-        // for (var data in responses) {
-        //     dataArray.push(responses[data]);
-        // }
         answers.forEach(ans => {
             responses.push(ans.response)
-            // for (var data in res) {
-            //     r.push(res[data])
-            //     // responses.push(r)
-            // }
-            // console.log(responses)
         })
         for (let data in responses) {
             dataArray.push(Object.values(responses[data]));
-            // for(var d in data) {
-            //     dataArray.push(d)
-            // }
         }
 
         this.setState({
-            responses: dataArray
+            responses: dataArray,
+            excel_data: responses
         })
+    }
+
+    backButton = () => {
+        this.props.history.push('/')
+    }
+
+    to_excel = () => {
+        console.log(this.state.excel_data)
+        const filename = `${this.state.survey_name}.xlsx`
+        const ws = xlsx.utils.json_to_sheet(this.state.excel_data)
+        const wb = xlsx.utils.book_new()
+        xlsx.utils.book_append_sheet(wb, ws, 'test')
+        xlsx.writeFile(wb, filename)
+        alert("Exported Successfully")
     }
 
     render() {
         console.log(this.state.responses)
         return (
             <div>
+                <AppBar position='static' color='primary' style={{ color: "#fafafa" }}>
+                    <Toolbar>
+                        <IconButton onClick={this.backButton} edge='start' style={{marginRight: "4px"}}>
+                            <ArrowBackIcon fontSize='large' style={{ color: grey[50] }}/>
+                        </IconButton>
+                        <Typography style={{flexGrow: 1}} variant='h4'>
+                            {this.state.survey_name}
+                        </Typography>
+                        <Button onClick={this.to_excel} variant='contained' color='secondary'>Export</Button>
+                    </Toolbar>
+                </AppBar>
+
                 <Grid
                     style={{ marginTop: "20px" }}
                     container
@@ -117,7 +133,7 @@ class ViewResponses extends Component {
                                     <CardActionArea>
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h5">
-                                                {i+1}. {ques.name}
+                                                {i + 1}. {ques.name}
                                             </Typography>
                                             <Typography gutterBottom variant="h6" component="h6">
                                                 Responses:
@@ -125,7 +141,7 @@ class ViewResponses extends Component {
                                             <List>
                                                 {
                                                     this.state.responses.map((res, j) => {
-                                                        return <ListItem style={{fontSize: "15px", background: "#EEEEEE"}} key={j}>{res[i]}</ListItem>
+                                                        return <ListItem style={{ fontSize: "15px", background: "#EEEEEE" }} key={j}>{res[i]}</ListItem>
                                                     })
                                                 }
                                             </List>
