@@ -1,4 +1,4 @@
-import { AppBar, Button, Card, CardActionArea, CardContent, Grid, IconButton, List, ListItem, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Card, CardActionArea, CardContent, Grid, IconButton, List, ListItem, Toolbar, Typography } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios'
@@ -6,6 +6,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getSurvey } from '../store/actions/surveyActions'
 import * as xlsx from 'xlsx'
+import ExportMenu from '../Components/ExportMenu';
+import * as converter from 'json-2-csv'
+import * as fs from 'fs'
 
 class ViewResponses extends Component {
 
@@ -18,7 +21,7 @@ class ViewResponses extends Component {
             survey_description: "",
             questions: [],
             responses: [],
-            excel_data: []
+            export_data: []
         }
     }
 
@@ -61,7 +64,7 @@ class ViewResponses extends Component {
 
         this.setState({
             responses: dataArray,
-            excel_data: responses
+            export_data: responses
         })
     }
 
@@ -70,18 +73,29 @@ class ViewResponses extends Component {
     }
 
     to_excel = () => {
-        console.log(this.state.excel_data)
+        console.log(this.state.export_data)
         const filename = `${this.state.survey_name}.xlsx`
-        const ws = xlsx.utils.json_to_sheet(this.state.excel_data)
+        const ws = xlsx.utils.json_to_sheet(this.state.export_data)
         const wb = xlsx.utils.book_new()
         xlsx.utils.book_append_sheet(wb, ws, 'test')
         xlsx.writeFile(wb, filename)
+    }
+    
+    to_csv = () => {
+        const filename = `${this.state.survey_name}.csv`
+        converter.json2csv(this.state.export_data, (err, csv) => {
+            if (err) {
+                throw err;
+            }
+            fs.writeFileSync(filename, csv)
+            
+        })
         alert("Exported Successfully")
     }
 
     render() {
-        console.log(this.state.responses)
-        return (
+            console.log(this.state.responses)
+        return(
             <div>
                 <AppBar position='static' color='primary' style={{ color: "#fafafa" }}>
                     <Toolbar>
@@ -91,7 +105,7 @@ class ViewResponses extends Component {
                         <Typography style={{flexGrow: 1}} variant='h4'>
                             {this.state.survey_name}
                         </Typography>
-                        <Button onClick={this.to_excel} variant='contained' color='secondary'>Export</Button>
+                        <ExportMenu to_excel={this.to_excel} to_csv={this.to_csv}/>
                     </Toolbar>
                 </AppBar>
 
@@ -141,7 +155,7 @@ class ViewResponses extends Component {
                                             <List>
                                                 {
                                                     this.state.responses.map((res, j) => {
-                                                        return <ListItem style={{ fontSize: "15px", background: "#EEEEEE" }} key={j}>{res[i]}</ListItem>
+                                                        return <ListItem style={{ fontSize: "15px", background: "#EEEEEE" }} key={j}>{j+1}.  {res[i]}</ListItem>
                                                     })
                                                 }
                                             </List>
@@ -153,7 +167,7 @@ class ViewResponses extends Component {
                         })
                     }
                 </Grid>
-            </div>
+            </div >
         )
     }
 }

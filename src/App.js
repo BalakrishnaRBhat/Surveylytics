@@ -9,6 +9,8 @@ import store from './store/store';
 // import { ResponsePage } from './Pages/ResponsePage';
 import Responses from './Pages/Responses';
 import ViewResponses from './Pages/ViewResponses';
+import { Submitted } from './Pages/Submitted';
+import Footer from './Components/Footer';
 
 const theme = createTheme({
   palette: {
@@ -38,7 +40,9 @@ function App() {
             <Route exact path='/create' component={CreateForm} />
             <Route exact path='/response/:id' component={Responses} />
             <Route exact path='/viewResponses/:id' component={ViewResponses} />
+            <Route exact path='/submitted' component={Submitted} />
           </BrowserRouter>
+          {/* <Footer></Footer> */}
         </ThemeProvider>
       </Provider>
     </div>

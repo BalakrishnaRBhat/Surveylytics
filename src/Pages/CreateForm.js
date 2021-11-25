@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Button, Card, CardActionArea, CardContent, CardActions, FormControlLabel, Grid, makeStyles, Radio, RadioGroup, TextField, CardHeader, IconButton } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
-import DeleteIcon from '@material-ui/icons/Delete';
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { AppBar, Toolbar } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
@@ -46,7 +47,7 @@ export const CreateForm = () => {
     const [choice3, setChoice3] = useState("")
     const [choice4, setChoice4] = useState("")
     const [question_name, setQuestion_name] = useState("")
-    const [question_type, setQuestion_type] = useState("text")
+    const [question_type, setQuestion_type] = useState("")
     const [questions, setQuestions] = useState([])
 
     const navigate = useHistory()
@@ -80,9 +81,8 @@ export const CreateForm = () => {
     }
 
     const handleDelete = (name) => {
-        setQuestions(questions.splice(questions.indexOf(name, 1)))
+        setQuestions(questions.filter(item => item.name !== name))
     }
-
     return (
         <div className={classes.root}>
             <AppBar
@@ -141,11 +141,93 @@ export const CreateForm = () => {
                                         <CardHeader
                                             action={
                                                 <IconButton onClick={() => handleDelete(ques.name)}>
-                                                    <DeleteIcon></DeleteIcon>
+                                                    <DeleteIcon/>
                                                 </IconButton>
                                             }
                                         />
-                                        <CardActionArea>
+                                            <CardContent>
+                                                <Typography gutterBottom variant="h5" component="div">
+                                                 {ques.name}
+                                                </Typography>
+                                                {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
+                                                {ques.type === "mulchoices" ? <FormControl component="fieldset">
+                                                    <RadioGroup>
+                                                        <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
+                                                        <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
+                                                        <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
+                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} />
+                                                    </RadioGroup>
+                                                </FormControl> : <div></div>
+                                                }
+                                                {ques.type === "date" ? <TextField
+                                                    type="date"
+                                                    fullWidth
+                                                    className={classes.textField}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }} /> : <div></div>
+                                                }
+                                            </CardContent>
+                                    </Card>
+                                </Grid>))
+                        }
+
+                    </Grid>
+
+
+                    {/* Form display */}
+
+
+                    <Grid item lg={12}>
+                        <Grid>
+                            <Grid item lg={12}>
+                                <Card style={{ width: "1000px", background: "#e8f5e9" }}>
+                                    <CardContent>
+                                        <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="QuestionName" fullWidth style={{ marginBottom: "6px" }} />
+                                        <FormControl fullWidth className={classes.formControl}>
+                                            <Select
+                                                style={{ width: "100%" }}
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={question_type}
+                                                variant='outlined'
+                                                fullWidth
+                                                onChange={(e) => { if (e.target.value === "mulchoices") { setChoice(true) } else { setChoice("false") } return setQuestion_type(e.target.value) }}
+                                            >
+                                                <MenuItem value={"text"}>Text</MenuItem>
+                                                <MenuItem value={"mulchoices"}>Multiple Choices</MenuItem>
+                                                <MenuItem value={"date"}>Date</MenuItem>
+                                            </Select>
+                                        </FormControl>
+                                        {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
+                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice1} label="Enter option1" onChange={(e) => setChoice1(e.target.value)}></TextField></Grid>
+                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice2} label="Enter option2" onChange={(e) => setChoice2(e.target.value)}></TextField></Grid>
+                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice3} label="Enter option3" onChange={(e) => setChoice3(e.target.value)}></TextField></Grid>
+                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice4} label="Enter option4" onChange={(e) => setChoice4(e.target.value)}></TextField></Grid>
+                                        </Grid> : <div></div>}
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button startIcon={<AddCircleIcon/>} onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px", color: "#fafafa" }}>Add Question</Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item lg={12}>
+                        <Typography variant='h4'>Live Preview</Typography>
+                    </Grid>
+                    <Grid
+                        container
+                        style={{ marginTop: "10px" }}
+                        spacing={3}
+                        direction='column'
+                        alignItems='center'
+                        justifyContent='center'
+                    >
+                        {
+                            questions.map((ques, index) => (
+                                <Grid item lg={12} key={index}>
+                                    <Card style={{ width: "1000px", background: "#e8f5e9" }}>
                                             <CardContent>
                                                 <Typography gutterBottom variant="h5" component="div">
                                                     {index + 1}. {ques.name}
@@ -169,51 +251,10 @@ export const CreateForm = () => {
                                                     }} /> : <div></div>
                                                 }
                                             </CardContent>
-                                        </CardActionArea>
                                     </Card>
                                 </Grid>))
                         }
 
-                    </Grid>
-
-
-                    {/* Form display */}
-
-
-                    <Grid item lg={12}>
-                        <Grid>
-                            <Grid item lg={12}>
-                                <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                        <CardContent>
-                                            <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="QuestionName" fullWidth style={{ marginBottom: "6px" }} />
-                                            <FormControl fullWidth className={classes.formControl}>
-                                                <Select
-                                                    style={{ width: "100%" }}
-                                                    labelId="demo-simple-select-label"
-                                                    id="demo-simple-select"
-                                                    value={question_type}
-                                                    variant='outlined'
-                                                    fullWidth
-                                                    onChange={(e) => { if (e.target.value === "mulchoices") { setChoice(true) } else { setChoice("false") } return setQuestion_type(e.target.value) }}
-                                                >
-                                                    <MenuItem value={"text"}>Text</MenuItem>
-                                                    <MenuItem value={"mulchoices"}>Multiple Choices</MenuItem>
-                                                    <MenuItem value={"date"}>Date</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                            {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
-                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice1} label="Enter option1" onChange={(e) => setChoice1(e.target.value)}></TextField></Grid>
-                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice2} label="Enter option2" onChange={(e) => setChoice2(e.target.value)}></TextField></Grid>
-                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice3} label="Enter option3" onChange={(e) => setChoice3(e.target.value)}></TextField></Grid>
-                                                <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={choice4} label="Enter option4" onChange={(e) => setChoice4(e.target.value)}></TextField></Grid>
-                                            </Grid> : <div></div>}
-                                        </CardContent>
-                                        <CardActions>
-                                            <Button onClick={addQuestion} color='primary' variant='contained' style={{ marginTop: "6px" }}>Add Question</Button>
-                                        </CardActions>
-                                </Card>
-                            </Grid>
-                        </Grid>
                     </Grid>
                 </Grid>
 

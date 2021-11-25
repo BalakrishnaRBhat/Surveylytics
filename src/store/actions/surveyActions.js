@@ -5,7 +5,7 @@ import { GET_ERRORS, GET_SURVEY, GET_SURVEYS } from './surveyTypes'
 export const createSurvey = (survey, navigate) => async dispatch => {
     try {
         await axios.post('http://localhost:8000/survey_skeletons', survey)
-        navigate.push('/dashboard')
+        navigate.push('/')
     } catch (error) {
         dispatch({
             type: GET_ERRORS,

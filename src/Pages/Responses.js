@@ -40,6 +40,7 @@ class Responses extends Component {
         }
         await axios.post('http://localhost:8000/responses', newResponse)
         console.log(newResponse)
+        this.props.history.push('/submitted')
     }
 
     componentDidMount() {
