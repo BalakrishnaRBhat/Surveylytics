@@ -1,0 +1,334 @@
+{
+  "surveys": [
+    {
+      "id": 1,
+      "survey_name": "Feedback form",
+      "survey_description": "Feedback form survey",
+      "questions": [
+        {
+          "question_id": 1,
+          "question": "Name",
+          "choice": false,
+          "choices": [],
+          "answers": [
+            {
+              "answer_id": 1,
+              "answer": "Raju"
+            },
+            {
+              "answer_id": 2,
+              "answer": "Rajesh"
+            },
+            {
+              "answer_id": 3,
+              "answer": "Ram"
+            }
+          ]
+        },
+        {
+          "question_id": 2,
+          "question": "Favorite Car Brand",
+          "choice": true,
+          "choices": [
+            "MarutiSuzuki",
+            "Toyota",
+            "Ford",
+            "Mahindra"
+          ],
+          "answers": [
+            {
+              "answer_id": 1,
+              "answer": "MarutiSuzuki"
+            },
+            {
+              "answer_id": 2,
+              "answer": "Toyota"
+            },
+            {
+              "answer_id": 3,
+              "answer": "Mahindra"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "survey_skeletons": [
+    {
+      "survey_name": "Detail form",
+      "survey_description": "User details",
+      "questions": [
+        {
+          "name": "What is your Name",
+          "ch": false,
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        },
+        {
+          "name": "What is your age",
+          "ch": false,
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        },
+        {
+          "name": "What is your date of birth",
+          "ch": "false",
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "date",
+          "answers": []
+        }
+      ],
+      "id": 1
+    },
+    {
+      "survey_name": "Covid details form",
+      "survey_description": "Collect covid vaccine status",
+      "questions": [
+        {
+          "name": "Name",
+          "ch": false,
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        },
+        {
+          "name": "Age",
+          "ch": false,
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        },
+        {
+          "name": "Vaccination date",
+          "ch": "false",
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "date",
+          "answers": []
+        }
+      ],
+      "id": 2
+    },
+    {
+      "survey_name": "Certification details form",
+      "survey_description": "Collect certification details",
+      "questions": [
+        {
+          "name": "Certification date",
+          "ch": "false",
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "date",
+          "answers": []
+        },
+        {
+          "name": "Name",
+          "ch": "false",
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        }
+      ],
+      "id": 3
+    },
+    {
+      "survey_name": "Feedback form",
+      "survey_description": "Collect feedback",
+      "questions": [
+        {
+          "name": "Your name",
+          "ch": "false",
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        },
+        {
+          "name": "How was the assessment",
+          "ch": "false",
+          "options": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "text",
+          "answers": []
+        }
+      ],
+      "id": 4
+    },
+    {
+      "survey_name": "Rapid form",
+      "survey_description": "rapide",
+      "questions": [
+        {
+          "name": "Name",
+          "ch": "false",
+          "options": [],
+          "type": "text",
+          "answers": []
+        },
+        {
+          "name": "Choices",
+          "ch": true,
+          "options": [
+            "abc",
+            "bdc",
+            "wdg"
+          ],
+          "type": "mulchoices",
+          "answers": []
+        }
+      ],
+      "id": 5
+    },
+    {
+      "survey_name": "wad",
+      "survey_description": "wwad",
+      "questions": [
+        {
+          "name": "wad",
+          "ch": "false",
+          "options": [
+            "ddd",
+            "ddawdwad",
+            "awdawd"
+          ],
+          "type": "dropdown",
+          "answers": []
+        }
+      ],
+      "id": 6
+    }
+  ],
+  "responses": [
+    {
+      "survey_id": "2",
+      "response": {
+        "Name": "Raju ",
+        "Age": "22",
+        "Vaccination date": "2021-11-13"
+      },
+      "id": 1
+    },
+    {
+      "survey_id": "1",
+      "response": {
+        "What is your Name": "Hari",
+        "What is your age": "24",
+        "What is your date of birth": "2021-11-06"
+      },
+      "id": 2
+    },
+    {
+      "survey_id": "2",
+      "response": {
+        "Name": "Vikas",
+        "Age": "24",
+        "Vaccination date": "2021-11-25"
+      },
+      "id": 3
+    },
+    {
+      "survey_id": "1",
+      "response": {
+        "What is your Name": "Rajesh",
+        "What is your age": "21",
+        "What is your date of birth": "2021-11-19"
+      },
+      "id": 4
+    },
+    {
+      "survey_id": "3",
+      "response": {
+        "Certification date": "2021-11-16",
+        "Name": "React js"
+      },
+      "id": 5
+    },
+    {
+      "survey_id": "3",
+      "response": {
+        "Certification date": "2021-11-17",
+        "Name": "Krishna"
+      },
+      "id": 6
+    },
+    {
+      "survey_id": "4",
+      "response": {
+        "akjdw": "kajljdwawd",
+        "awdlajdw": "hawkd"
+      },
+      "id": 7
+    },
+    {
+      "survey_id": "5",
+      "response": {
+        "Name": "Raju",
+        "Choices": "abc"
+      },
+      "id": 8
+    },
+    {
+      "survey_id": "6",
+      "response": {
+        "wad": "ddawdwad"
+      },
+      "id": 9
+    },
+    {
+      "survey_id": "5",
+      "response": {
+        "Name": "awd",
+        "Choices": "bdc"
+      },
+      "id": 10
+    }
+  ]
+}
