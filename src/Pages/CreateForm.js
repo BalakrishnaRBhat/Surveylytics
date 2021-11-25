@@ -10,6 +10,7 @@ import Select from '@material-ui/core/Select'
 import { useHistory } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { createSurvey } from '../store/actions/surveyActions'
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => {
     return {
@@ -39,7 +40,18 @@ const useStyles = makeStyles((theme) => {
 
 export const CreateForm = () => {
     const classes = useStyles()
-    const [formName, setFormName] = useState("Untitled Survey")
+
+    const navigate = useHistory()
+    const location = useLocation()
+    const dispatch = useDispatch()
+    
+    let preloadedState = location.state
+    
+    let preloadedName = preloadedState ? preloadedState.formName : "Untitled Survey"
+    const [formName, setFormName] = useState(preloadedName)
+
+    let preloadedDescription = preloadedState ? preloadedState.formDescription : "Untitled Survey"
+    
     const [formDescription, setFormDescription] = useState("")
     const [choice, setChoice] = useState(false)
     // const [choice1, setChoice1] = useState("")
@@ -50,10 +62,10 @@ export const CreateForm = () => {
     const [optionValue, setOptionValue] = useState([""])
     const [question_name, setQuestion_name] = useState("")
     const [question_type, setQuestion_type] = useState("")
-    const [questions, setQuestions] = useState([])
+    let preloadedQuestions = preloadedState ? preloadedState.questions : []
+    const [questions, setQuestions] = useState(preloadedQuestions)
 
-    const navigate = useHistory()
-    const dispatch = useDispatch()
+    
 
     const handleOptionAdd = () => {
         if (optionValue.trim().length === 0) return;
@@ -71,6 +83,13 @@ export const CreateForm = () => {
         // let choices = [choice1, choice2, choice3, choice4]
         const updatedQuestions = [...questions, { name: question_name, ch: choice, options: options, type: question_type, answers: [] }]
         setQuestions(updatedQuestions)
+    }
+
+    const handlePreview = () => {
+        navigate.push({
+            pathname: '/preview',
+            state: { formName: formName, formDescription: formDescription, questions: questions}
+        })
     }
 
     useEffect(() => {
@@ -107,6 +126,9 @@ export const CreateForm = () => {
                         {formName}
                     </Typography>
 
+                    {questions.length > 0 ? <Button onClick={handlePreview} variant='contained' color='secondary' style={{ color: "#111", marginRight: "20px" }}>
+                        Preview
+                    </Button> : <></>}
                     {questions.length > 0 ? <Button onClick={saveForm} variant='contained' color='secondary' style={{ color: "#111", marginRight: "20px" }}>
                         Save
                     </Button> : <></>}
@@ -131,7 +153,7 @@ export const CreateForm = () => {
 
                                 <CardContent>
                                     <TextField onChange={(e) => setFormName(e.target.value)} variant="outlined" label="Enter Form Name" fullWidth style={{ marginBottom: "6px" }} />
-                                    <TextField value={formDescription} onChange={(e) => setFormDescription(e.target.value)} variant="outlined" label="Enter Form Description" fullWidth />
+                                    <TextField onChange={(e) => setFormDescription(e.target.value)} variant="outlined" label="Enter Form Description" fullWidth />
                                 </CardContent>
                             </CardActionArea>
                         </Card>
@@ -230,7 +252,16 @@ export const CreateForm = () => {
                                                 <MenuItem value={"dropdown"}>Dropdown</MenuItem>
                                             </Select>
                                         </FormControl>
-                                        {question_type === "mulchoices" || "dropdown" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
+                                        {question_type === "mulchoices" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
+                                            <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={optionValue} label="Enter option" onChange={(e) => setOptionValue(e.target.value)}></TextField></Grid>
+                                            <Grid item spacing={3}><Button style={{ marginTop: "15px" }} variant='text' color='primary' onClick={handleOptionAdd}>Add option</Button></Grid>
+                                            <Grid direction='column' container spacing={2}>{
+                                                options.map(option => (
+                                                    <Grid item style={{ marginLeft: "10px" }}><Button variant='text' onClick={() => handleOptionDelete(option)} endIcon={<DeleteIcon />}>{option}</Button></Grid>
+                                                ))
+                                            }</Grid>
+                                        </Grid> : <div></div>}
+                                        {question_type === "dropdown" ? <Grid container style={{ marginTop: "4px" }} spacing={2}>
                                             <Grid item spacing={3}><TextField variant='outlined' className={classes.textField} value={optionValue} label="Enter option" onChange={(e) => setOptionValue(e.target.value)}></TextField></Grid>
                                             <Grid item spacing={3}><Button style={{ marginTop: "15px" }} variant='text' color='primary' onClick={handleOptionAdd}>Add option</Button></Grid>
                                             <Grid direction='column' container spacing={2}>{
