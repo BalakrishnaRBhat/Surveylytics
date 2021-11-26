@@ -1,58 +1,4 @@
 {
-  "surveys": [
-    {
-      "id": 1,
-      "survey_name": "Feedback form",
-      "survey_description": "Feedback form survey",
-      "questions": [
-        {
-          "question_id": 1,
-          "question": "Name",
-          "choice": false,
-          "choices": [],
-          "answers": [
-            {
-              "answer_id": 1,
-              "answer": "Raju"
-            },
-            {
-              "answer_id": 2,
-              "answer": "Rajesh"
-            },
-            {
-              "answer_id": 3,
-              "answer": "Ram"
-            }
-          ]
-        },
-        {
-          "question_id": 2,
-          "question": "Favorite Car Brand",
-          "choice": true,
-          "choices": [
-            "MarutiSuzuki",
-            "Toyota",
-            "Ford",
-            "Mahindra"
-          ],
-          "answers": [
-            {
-              "answer_id": 1,
-              "answer": "MarutiSuzuki"
-            },
-            {
-              "answer_id": 2,
-              "answer": "Toyota"
-            },
-            {
-              "answer_id": 3,
-              "answer": "Mahindra"
-            }
-          ]
-        }
-      ]
-    }
-  ],
   "survey_skeletons": [
     {
       "survey_name": "Feedback form",
@@ -164,6 +110,15 @@
         "Vaccination status": "2nd dose - Fully Vacinated"
       },
       "id": 5
+    },
+    {
+      "survey_id": "1",
+      "response": {
+        "Your name": "Harish",
+        "Date of assessment": "2021-11-20",
+        "How was the assessment": "good"
+      },
+      "id": 6
     }
   ]
 }
