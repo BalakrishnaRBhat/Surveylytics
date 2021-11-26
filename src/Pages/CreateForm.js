@@ -54,10 +54,6 @@ export const CreateForm = () => {
     
     const [formDescription, setFormDescription] = useState(preloadedDescription)
     const [choice, setChoice] = useState(false)
-    // const [choice1, setChoice1] = useState("")
-    // const [choice2, setChoice2] = useState("")
-    // const [choice3, setChoice3] = useState("")
-    // const [choice4, setChoice4] = useState("")
     const [options, setOptions] = useState([])
     const [optionValue, setOptionValue] = useState([""])
     const [question_name, setQuestion_name] = useState("")
@@ -80,7 +76,6 @@ export const CreateForm = () => {
 
     const addQuestion = () => {
 
-        // let choices = [choice1, choice2, choice3, choice4]
         const updatedQuestions = [...questions, { name: question_name, ch: choice, options: options, type: question_type, answers: [] }]
         setQuestions(updatedQuestions)
     }
@@ -104,7 +99,6 @@ export const CreateForm = () => {
             survey_description: formDescription,
             questions: questions
         }
-        // await axios.post('http://localhost:8000/survey_skeletons', newSurvey)
         dispatch(createSurvey(newSurvey, navigate))
     }
     const cancelForm = () => {
@@ -158,7 +152,6 @@ export const CreateForm = () => {
                         </Card>
                     </Grid>
 
-                    {/* Form display */}
 
                     <Grid
                         container
@@ -172,13 +165,7 @@ export const CreateForm = () => {
                             questions.map((ques, index) => (
                                 <Grid item lg={12} key={index}>
                                     <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                        {/* <CardHeader
-                                            action={
-                                                <IconButton onClick={() => handleDelete(ques.name)}>
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            }
-                                        /> */}
+                                        
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="div">
                                                 {ques.name}
@@ -186,10 +173,7 @@ export const CreateForm = () => {
                                             {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
                                             {ques.type === "mulchoices" ? <FormControl component="fieldset">
                                                 <RadioGroup>
-                                                    {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
-                                                        <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
-                                                        <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
+                                                    
                                                     {
                                                         ques.options.map(option => (
                                                             <FormControlLabel value={option} control={<Radio />} label={option} />
@@ -227,10 +211,6 @@ export const CreateForm = () => {
                         }
 
                     </Grid>
-
-
-                    {/* Form display */}
-
 
                     <Grid item lg={12}>
                         <Grid>
@@ -281,12 +261,7 @@ export const CreateForm = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    {/* <Grid item lg={12}>
-                        <Typography variant='h4'>Live Preview</Typography>
-                    </Grid> */}
-                    
                 </Grid >
-
             </div >
         </div >
     )

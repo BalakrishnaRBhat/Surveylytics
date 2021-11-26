@@ -98,10 +98,6 @@ export const Preview = () => {
                                     {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
                                     {ques.type === "mulchoices" ? <FormControl component="fieldset">
                                         <RadioGroup>
-                                            {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} /> */}
-                                            {/* <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
-                                                        <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
                                             {
                                                 ques.options.map(option => (
                                                     <FormControlLabel value={option} control={<Radio />} label={option} />

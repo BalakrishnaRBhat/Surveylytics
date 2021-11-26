@@ -90,10 +90,6 @@ class Responses extends Component {
                                             {ques.type === "text" ? <TextField value={this.state.answers[`${ques.name}`]} name={ques.name} onChange={(e) => this.handleChange(e, index)} variant="standard" fullWidth></TextField> : <></>}
                                             {ques.type === "mulchoices" ? <FormControl component="fieldset">
                                                 <RadioGroup value={this.state.answers[`${ques.name}`]} name={ques.name} onChange={(e) => this.handleChange(e, index)}>
-                                                    {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} />
-                                                <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
-                                                <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
                                                     {
                                                         ques.options.map((option, index) => (
                                                             <div key={index}><FormControlLabel value={option} control={<Radio />} label={option} /></div>

@@ -58,9 +58,7 @@ export const Dashboard = () => {
                     <Typography className={classes.appbar} variant='h4'>
                         Survelytics
                     </Typography>
-                    {/* <Button onClick={create} variant='contained' color='secondary' style={{ color: "#111", marginRight: "20px" }}>
-                        Create
-                    </Button> */}
+                    
                 </Toolbar>
             </AppBar>
             <Grid
