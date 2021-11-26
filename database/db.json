@@ -55,175 +55,115 @@
   ],
   "survey_skeletons": [
     {
-      "survey_name": "Detail form",
-      "survey_description": "User details",
+      "survey_name": "Feedback form",
+      "survey_description": "Collect feedback details",
       "questions": [
         {
-          "name": "What is your Name",
+          "name": "Your name",
           "ch": false,
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
+          "options": [],
           "type": "text",
           "answers": []
         },
         {
-          "name": "What is your age",
-          "ch": false,
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "text",
+          "name": "Date of assessment",
+          "ch": "false",
+          "options": [],
+          "type": "date",
           "answers": []
         },
         {
-          "name": "What is your date of birth",
+          "name": "How was the assessment",
           "ch": "false",
           "options": [
-            "",
-            "",
-            "",
-            ""
+            "bad",
+            "good",
+            "very good"
           ],
-          "type": "date",
+          "type": "dropdown",
           "answers": []
         }
       ],
       "id": 1
     },
     {
-      "survey_name": "Covid details form",
-      "survey_description": "Collect covid vaccine status",
+      "survey_name": "Employee Vaccination Details",
+      "survey_description": "Details on Vacinnation status of employees",
       "questions": [
         {
-          "name": "Name",
+          "name": "Employee ID",
           "ch": false,
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
+          "options": [],
           "type": "text",
           "answers": []
         },
         {
-          "name": "Age",
+          "name": "Employee Name",
           "ch": false,
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
+          "options": [],
           "type": "text",
           "answers": []
         },
         {
-          "name": "Vaccination date",
-          "ch": "false",
+          "name": "Vaccination status",
+          "ch": true,
           "options": [
-            "",
-            "",
-            "",
-            ""
+            "Not vaccinated",
+            "1st dose - Partially Vacinated",
+            "2nd dose - Fully Vacinated"
           ],
-          "type": "date",
+          "type": "mulchoices",
           "answers": []
         }
       ],
       "id": 2
-    },
-    {
-      "survey_name": "Certification details form",
-      "survey_description": "Collect certification details",
-      "questions": [
-        {
-          "name": "Certification date",
-          "ch": "false",
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "date",
-          "answers": []
-        },
-        {
-          "name": "Name",
-          "ch": "false",
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "text",
-          "answers": []
-        }
-      ],
-      "id": 3
     }
   ],
   "responses": [
     {
-      "survey_id": "2",
+      "survey_id": "1",
       "response": {
-        "Name": "Raju ",
-        "Age": "22",
-        "Vaccination date": "2021-11-13"
+        "Your name": "Krishna",
+        "Date of assessment": "2021-11-26",
+        "How was the assessment": "very good"
       },
       "id": 1
     },
     {
-      "survey_id": "1",
+      "survey_id": "2",
       "response": {
-        "What is your Name": "Hari",
-        "What is your age": "24",
-        "What is your date of birth": "2021-11-06"
+        "Employee ID": "73833",
+        "Employee Name": "Varun Shah",
+        "Vaccination status": "1st dose - Partially Vacinated"
       },
       "id": 2
     },
     {
       "survey_id": "2",
       "response": {
-        "Name": "Vikas",
-        "Age": "24",
-        "Vaccination date": "2021-11-25"
+        "Employee ID": "83232",
+        "Employee Name": "Krishna Rao",
+        "Vaccination status": "2nd dose - Fully Vacinated"
       },
       "id": 3
     },
     {
-      "survey_id": "1",
+      "survey_id": "2",
       "response": {
-        "What is your Name": "Rajesh",
-        "What is your age": "21",
-        "What is your date of birth": "2021-11-19"
+        "Employee ID": "27723",
+        "Employee Name": "Karthik Reddy",
+        "Vaccination status": "2nd dose - Fully Vacinated"
       },
       "id": 4
     },
     {
-      "survey_id": "3",
+      "survey_id": "2",
       "response": {
-        "Certification date": "2021-11-16",
-        "Name": "Varun"
+        "Employee ID": "83238",
+        "Employee Name": "Vikas Jha",
+        "Vaccination status": "2nd dose - Fully Vacinated"
       },
       "id": 5
-    },
-    {
-      "survey_id": "3",
-      "response": {
-        "Certification date": "2021-11-17",
-        "Name": "Krishna"
-      },
-      "id": 6
     }
   ]
 }

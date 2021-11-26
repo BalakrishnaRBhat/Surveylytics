@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, CardActionArea, CardContent, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
+import { Button, Card, CardContent, FormControl, FormControlLabel, Grid, MenuItem, Radio, RadioGroup, Select, TextField, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { getSurvey } from '../store/actions/surveyActions'
 import axios from 'axios'
@@ -39,7 +39,6 @@ class Responses extends Component {
             response: this.state.answers
         }
         await axios.post('http://localhost:8000/responses', newResponse)
-        console.log(newResponse)
         this.props.history.push('/submitted')
     }
 
@@ -63,14 +62,12 @@ class Responses extends Component {
                     <Grid item lg={12}
                     >
                         <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                            <CardActionArea>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
                                         Survey Name: {this.state.survey_name}
                                     </Typography>
                                     <Typography gutterBottom variant='h5' style={{ fontSize: "20px" }}>Survey Description: {this.state.survey_description}</Typography>
                                 </CardContent>
-                            </CardActionArea>
                         </Card>
                     </Grid>
                 </Grid>
@@ -86,7 +83,6 @@ class Responses extends Component {
                         this.state.questions.map((ques, index) => (
                             <Grid item lg={12} key={index}>
                                 <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                    <CardActionArea>
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="div">
                                                 {ques.name}
@@ -99,8 +95,8 @@ class Responses extends Component {
                                                 <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
                                                 <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
                                                     {
-                                                        ques.options.map(option => (
-                                                            <FormControlLabel value={option} control={<Radio />} label={option} />
+                                                        ques.options.map((option, index) => (
+                                                            <div key={index}><FormControlLabel value={option} control={<Radio />} label={option} /></div>
                                                         ))
                                                     }
                                                 </RadioGroup>
@@ -125,15 +121,14 @@ class Responses extends Component {
                                                         onChange={(e) => this.handleChange(e, index)}
                                                     >
                                                         {
-                                                            ques.options.map(option => (
-                                                                <MenuItem fullWidth value={option}>{option}</MenuItem>
+                                                            ques.options.map((option, index) => (
+                                                                <MenuItem value={option}>{option}</MenuItem>
                                                             ))
                                                         }
                                                     </Select>
                                                 </FormControl> : <></>
                                         }
                                         </CardContent>
-                                    </CardActionArea>
                                 </Card>
                             </Grid>))
                     }

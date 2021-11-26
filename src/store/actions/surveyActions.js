@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_ERRORS, GET_SURVEY, GET_SURVEYS } from './surveyTypes'
+import { DELETE_SURVEY, GET_ERRORS, GET_SURVEY, GET_SURVEYS } from './surveyTypes'
 
 
 export const createSurvey = (survey, navigate) => async dispatch => {
@@ -21,12 +21,19 @@ export const getSurveys = () => async dispatch=>{
         type: GET_SURVEYS,
         payload: res.data
     })
-}
+}       
 
 export const getSurvey =(id)=>async dispatch=>{
     const res = await axios.get(`http://localhost:8000/survey_skeletons/${id}`)
     dispatch({
         type:GET_SURVEY,
         payload:res.data
+    })
+}
+export const deleteSurvey = (id) => async dispatch => {
+    await axios.delete(`http://localhost:8000/survey_skeletons/${id}`)
+    dispatch({
+        type: DELETE_SURVEY,
+        payload: id
     })
 }

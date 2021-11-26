@@ -38,7 +38,7 @@ function App() {
             {/* <Route exact path='/' component={Home} /> */}
             <Route exact path='/' component={Dashboard} />
             <Route exact path='/create' component={CreateForm} />
-            <Route exact path='/response/:id' component={Responses} />
+            <Route exact path='/response/:name/:id' component={Responses} />
             <Route exact path='/viewResponses/:id' component={ViewResponses} />
             <Route exact path='/submitted' component={Submitted} />
             <Route exact path='/preview' component={Preview} />

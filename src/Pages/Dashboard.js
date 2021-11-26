@@ -49,6 +49,8 @@ export const Dashboard = () => {
         dispatch(getSurveys())
     }, [dispatch])
 
+    
+
     return (
         <div>
             <AppBar position='fixed' color='primary' style={{ color: "#fafafa" }}>
@@ -79,7 +81,7 @@ export const Dashboard = () => {
                             <CardContent>
                                 <Grid container alignItems="center">
                                     <Grid item>
-                                        <Button color='primary' startIcon={<CreateIcon/>} variant='text' size='large'>Create new Survey</Button>
+                                        <Button color='primary' startIcon={<CreateIcon />} variant='text' size='large'>Create new Survey</Button>
                                     </Grid>
                                 </Grid>
 
@@ -101,20 +103,29 @@ export const Dashboard = () => {
                 </Grid>
 
             </Grid>
-            <Container className={classes.container}>
-                <Masonry
-                    breakpointCols={breakpoints}
-                    className="my-masonry-grid"
-                    columnClassName="my-masonry-grid_column"
-                >
-                    {surveys.map(survey => (
-                        <div key={survey.id}>
-                            <SurveyCard survey={survey}></SurveyCard>
-                        </div>
-                    ))
-                    }
-                </Masonry>
+            {
+                surveys.length ?
+                    <Container className={classes.container}>
+                        <Masonry
+                            breakpointCols={breakpoints}
+                            className="my-masonry-grid"
+                            columnClassName="my-masonry-grid_column"
+                        >
+                            {surveys.map(survey => (
+                                <div key={survey.id}>
+                                    <SurveyCard survey={survey}></SurveyCard>
+                                </div>
+                            ))
+                            }
+                        </Masonry>
+                    </Container> : <Container className={classes.container}>
+                        <Grid spacing={3} container alignItems='center' direction='column'>
+                        <Grid item><Typography variant='h6'>No surveys created</Typography></Grid>
+                    </Grid>
             </Container>
-        </div>
+
+            }
+
+        </div >
     )
 }

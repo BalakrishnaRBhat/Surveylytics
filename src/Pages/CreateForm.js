@@ -61,7 +61,7 @@ export const CreateForm = () => {
     const [options, setOptions] = useState([])
     const [optionValue, setOptionValue] = useState([""])
     const [question_name, setQuestion_name] = useState("")
-    const [question_type, setQuestion_type] = useState("")
+    const [question_type, setQuestion_type] = useState("text")
     let preloadedQuestions = preloadedState ? preloadedState.questions : []
     const [questions, setQuestions] = useState(preloadedQuestions)
 
@@ -104,7 +104,6 @@ export const CreateForm = () => {
             survey_description: formDescription,
             questions: questions
         }
-        console.log(newSurvey)
         // await axios.post('http://localhost:8000/survey_skeletons', newSurvey)
         dispatch(createSurvey(newSurvey, navigate))
     }
@@ -238,7 +237,7 @@ export const CreateForm = () => {
                             <Grid item lg={12}>
                                 <Card style={{ width: "1000px", background: "#e8f5e9" }}>
                                     <CardContent>
-                                        <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="QuestionName" fullWidth style={{ marginBottom: "6px" }} />
+                                        <TextField id="question_name" value={question_name} onChange={(e) => setQuestion_name(e.target.value)} variant="outlined" label="Enter Question" fullWidth style={{ marginBottom: "6px" }} />
                                         <FormControl fullWidth>
                                             <Select
                                                 style={{ width: "100%" }}

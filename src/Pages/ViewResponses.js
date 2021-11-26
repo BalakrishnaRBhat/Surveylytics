@@ -1,4 +1,4 @@
-import { AppBar, Card, CardActionArea, CardContent, Grid, IconButton, List, ListItem, Toolbar, Typography } from '@material-ui/core'
+import { AppBar, Card, CardContent, Grid, IconButton, List, ListItem, Toolbar, Typography } from '@material-ui/core'
 import { grey } from '@material-ui/core/colors';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import axios from 'axios'
@@ -71,7 +71,6 @@ class ViewResponses extends Component {
     }
 
     to_excel = () => {
-        console.log(this.state.export_data)
         const filename = `${this.state.survey_name}.xlsx`
         const ws = xlsx.utils.json_to_sheet(this.state.export_data)
         const wb = xlsx.utils.book_new()
@@ -80,7 +79,6 @@ class ViewResponses extends Component {
     }
     
     render() {
-            console.log(this.state.responses)
         return(
             <div>
                 <AppBar position='static' color='primary' style={{ color: "#fafafa" }}>
@@ -106,14 +104,12 @@ class ViewResponses extends Component {
                     <Grid item lg={12}
                     >
                         <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                            <CardActionArea>
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
                                         Survey Name: {this.state.survey_name}
                                     </Typography>
                                     <Typography gutterBottom variant='h5' style={{ fontSize: "20px" }}>Survey Description: {this.state.survey_description}</Typography>
                                 </CardContent>
-                            </CardActionArea>
                         </Card>
                     </Grid>
                 </Grid>
@@ -130,7 +126,6 @@ class ViewResponses extends Component {
                             return (<Grid item lg={12} key={i}
                             >
                                 <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                    <CardActionArea>
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="h5">
                                                 {i + 1}. {ques.name}
@@ -146,7 +141,6 @@ class ViewResponses extends Component {
                                                 }
                                             </List>
                                         </CardContent>
-                                    </CardActionArea>
                                 </Card>
                             </Grid>
                             )
