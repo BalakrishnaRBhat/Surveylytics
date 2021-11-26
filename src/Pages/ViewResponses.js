@@ -7,8 +7,6 @@ import { connect } from 'react-redux'
 import { getSurvey } from '../store/actions/surveyActions'
 import * as xlsx from 'xlsx'
 import ExportMenu from '../Components/ExportMenu';
-import * as converter from 'json-2-csv'
-import * as fs from 'fs'
 
 class ViewResponses extends Component {
 
@@ -81,18 +79,6 @@ class ViewResponses extends Component {
         xlsx.writeFile(wb, filename)
     }
     
-    to_csv = () => {
-        const filename = `${this.state.survey_name}.csv`
-        converter.json2csv(this.state.export_data, (err, csv) => {
-            if (err) {
-                throw err;
-            }
-            fs.writeFileSync(filename, csv)
-            
-        })
-        alert("Exported Successfully")
-    }
-
     render() {
             console.log(this.state.responses)
         return(
@@ -105,7 +91,7 @@ class ViewResponses extends Component {
                         <Typography style={{flexGrow: 1}} variant='h4'>
                             {this.state.survey_name}
                         </Typography>
-                        <ExportMenu to_excel={this.to_excel} to_csv={this.to_csv}/>
+                        <ExportMenu to_excel={this.to_excel} to_csv={this.to_csv} filename={`${this.state.survey_name}.csv`} data={this.state.export_data}/>
                     </Toolbar>
                 </AppBar>
 

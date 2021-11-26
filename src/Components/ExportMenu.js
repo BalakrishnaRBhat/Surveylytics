@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import CsvDownload from 'react-json-to-csv'
 
 export default function ExportMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -15,8 +16,7 @@ export default function ExportMenu(props) {
     setAnchorEl(null);
   };
 
-  const handleCSVClose = () => {
-    props.to_csv()
+  const handleClose = () => {
     setAnchorEl(null);
   };
 
@@ -30,9 +30,10 @@ export default function ExportMenu(props) {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
+        onClose={handleClose}
       >
-        <MenuItem onClick={handleEXCClose}>To Excel</MenuItem>
-        <MenuItem onClick={handleCSVClose}>To CSV</MenuItem>
+        <MenuItem onClick={handleEXCClose}><Button variant='outlined'>To Excel</Button></MenuItem>
+        <MenuItem onClick={handleClose}><CsvDownload data={props.data} filename={props.filename}><Button style={{width: "80px", background: '#fafafa', border: "none"}} variant='text' size='small'>To Csv</Button></CsvDownload></MenuItem>
       </Menu>
     </div>
   );

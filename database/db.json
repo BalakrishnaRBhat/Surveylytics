@@ -170,80 +170,6 @@
         }
       ],
       "id": 3
-    },
-    {
-      "survey_name": "Feedback form",
-      "survey_description": "Collect feedback",
-      "questions": [
-        {
-          "name": "Your name",
-          "ch": "false",
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "text",
-          "answers": []
-        },
-        {
-          "name": "How was the assessment",
-          "ch": "false",
-          "options": [
-            "",
-            "",
-            "",
-            ""
-          ],
-          "type": "text",
-          "answers": []
-        }
-      ],
-      "id": 4
-    },
-    {
-      "survey_name": "Rapid form",
-      "survey_description": "rapide",
-      "questions": [
-        {
-          "name": "Name",
-          "ch": "false",
-          "options": [],
-          "type": "text",
-          "answers": []
-        },
-        {
-          "name": "Choices",
-          "ch": true,
-          "options": [
-            "abc",
-            "bdc",
-            "wdg"
-          ],
-          "type": "mulchoices",
-          "answers": []
-        }
-      ],
-      "id": 5
-    },
-    {
-      "survey_name": "wad",
-      "survey_description": "wwad",
-      "questions": [
-        {
-          "name": "wad",
-          "ch": "false",
-          "options": [
-            "ddd",
-            "ddawdwad",
-            "awdawd"
-          ],
-          "type": "dropdown",
-          "answers": []
-        }
-      ],
-      "id": 6
     }
   ],
   "responses": [
@@ -287,7 +213,7 @@
       "survey_id": "3",
       "response": {
         "Certification date": "2021-11-16",
-        "Name": "React js"
+        "Name": "Varun"
       },
       "id": 5
     },
@@ -298,37 +224,6 @@
         "Name": "Krishna"
       },
       "id": 6
-    },
-    {
-      "survey_id": "4",
-      "response": {
-        "akjdw": "kajljdwawd",
-        "awdlajdw": "hawkd"
-      },
-      "id": 7
-    },
-    {
-      "survey_id": "5",
-      "response": {
-        "Name": "Raju",
-        "Choices": "abc"
-      },
-      "id": 8
-    },
-    {
-      "survey_id": "6",
-      "response": {
-        "wad": "ddawdwad"
-      },
-      "id": 9
-    },
-    {
-      "survey_id": "5",
-      "response": {
-        "Name": "awd",
-        "Choices": "bdc"
-      },
-      "id": 10
     }
   ]
 }

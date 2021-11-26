@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Button, Card, CardActionArea, CardContent, CardActions, FormControlLabel, Grid, makeStyles, Radio, RadioGroup, TextField, CardHeader, IconButton } from '@material-ui/core'
+import { Button, Card, CardActionArea, CardContent, CardActions, FormControlLabel, Grid, makeStyles, Radio, RadioGroup, TextField } from '@material-ui/core'
 import Typography from '@material-ui/core/Typography'
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { AppBar, Toolbar } from '@material-ui/core'
@@ -50,9 +50,9 @@ export const CreateForm = () => {
     let preloadedName = preloadedState ? preloadedState.formName : "Untitled Survey"
     const [formName, setFormName] = useState(preloadedName)
 
-    let preloadedDescription = preloadedState ? preloadedState.formDescription : "Untitled Survey"
+    let preloadedDescription = preloadedState ? preloadedState.formDescription : ""
     
-    const [formDescription, setFormDescription] = useState("")
+    const [formDescription, setFormDescription] = useState(preloadedDescription)
     const [choice, setChoice] = useState(false)
     // const [choice1, setChoice1] = useState("")
     // const [choice2, setChoice2] = useState("")
@@ -173,13 +173,13 @@ export const CreateForm = () => {
                             questions.map((ques, index) => (
                                 <Grid item lg={12} key={index}>
                                     <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                        <CardHeader
+                                        {/* <CardHeader
                                             action={
                                                 <IconButton onClick={() => handleDelete(ques.name)}>
                                                     <DeleteIcon />
                                                 </IconButton>
                                             }
-                                        />
+                                        /> */}
                                         <CardContent>
                                             <Typography gutterBottom variant="h5" component="div">
                                                 {ques.name}
@@ -220,6 +220,9 @@ export const CreateForm = () => {
                                                 </FormControl> : <></>
                                             }
                                         </CardContent>
+                                        <CardActions>
+                                            <Button variant='text' startIcon={<DeleteIcon/>} style={{color: "#d50000"}} onClick={() => handleDelete(ques.name)}>Delete</Button>
+                                        </CardActions>
                                     </Card>
                                 </Grid>))
                         }
@@ -279,66 +282,10 @@ export const CreateForm = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item lg={12}>
+                    {/* <Grid item lg={12}>
                         <Typography variant='h4'>Live Preview</Typography>
-                    </Grid>
-                    <Grid
-                        container
-                        style={{ marginTop: "10px" }}
-                        spacing={3}
-                        direction='column'
-                        alignItems='center'
-                        justifyContent='center'
-                    >
-                        {
-                            questions.map((ques, index) => (
-                                <Grid item lg={12} key={index}>
-                                    <Card style={{ width: "1000px", background: "#e8f5e9" }}>
-                                        <CardContent>
-                                            <Typography gutterBottom variant="h5" component="div">
-                                                {index + 1}. {ques.name}
-                                            </Typography>
-                                            {ques.type === "text" ? <TextField variant="standard" fullWidth></TextField> : <></>}
-                                            {ques.type === "mulchoices" ? <FormControl component="fieldset">
-                                                <RadioGroup>
-                                                    {/* <FormControlLabel value={ques.options[0]} control={<Radio />} label={ques.options[0]} /> */}
-                                                    {/* <FormControlLabel value={ques.options[1]} control={<Radio />} label={ques.options[1]} />
-                                                        <FormControlLabel value={ques.options[2]} control={<Radio />} label={ques.options[2]} />
-                                                        <FormControlLabel value={ques.options[3]} control={<Radio />} label={ques.options[3]} /> */}
-                                                    {
-                                                        ques.options.map(option => (
-                                                            <FormControlLabel value={option} control={<Radio />} label={option} />
-                                                        ))
-                                                    }
-                                                </RadioGroup>
-                                            </FormControl> : <div></div>
-                                            }
-                                            {ques.type === "date" ? <TextField
-                                                type="date"
-                                                fullWidth
-                                                className={classes.textField}
-                                                InputLabelProps={{
-                                                    shrink: true,
-                                                }} /> : <div></div>
-                                            }
-                                            {
-                                                ques.type === "dropdown" ? <FormControl fullWidth>
-                                                    <Select
-                                                    >
-                                                        {
-                                                            ques.options.map(option => (
-                                                                <MenuItem value={option}>{option}</MenuItem>
-                                                            ))
-                                                        }
-                                                    </Select>
-                                                </FormControl> : <></>
-                                            }
-                                        </CardContent>
-                                    </Card>
-                                </Grid>))
-                        }
-
-                    </Grid>
+                    </Grid> */}
+                    
                 </Grid >
 
             </div >
